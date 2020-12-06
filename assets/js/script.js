@@ -1,3 +1,4 @@
+
 var tryme; 
     
 tryme = dayjs('2019-01-25').format('DD/MM/YYYY')
@@ -21,6 +22,12 @@ function retrieveEvents() {
     }
 }
 
+/*var localizedFormat = require('dayjs/plugin/localizedFormat')
+dayjs.extend(localizedFormat)
+dayjs().format('L LT')*/
+var now = dayjs().format('dddd, MMM DD');
+now = now + "th";
+
 function displayPlanner() {
     
         for (j = 0; j <timeBlocks.length; j++) {
@@ -35,20 +42,19 @@ function displayPlanner() {
                     $(textBox).text("This is the text area");
                     $(textBox).addClass("present");
                     $(textBox).attr("name", j);
-                    $(textBox).addClass("col-md-8");
+                    $(textBox).addClass("col-md-9 description");
                 }
                 else if(i===0){
 
                     var divEl = $("<div>");
-                    $(divEl).addClass("col");
                     divEl.text(timeBlocks[j]);
-                    $(divEl).addClass("col-md-1");
+                    $(divEl).addClass("col-md-2 time-block hour");
                 }
                 else{
                     var savedBtn= $("<button>" + "Save" + "</button>");
                     $(savedBtn).addClass("saveBtn");
                     $(savedBtn).val(j);
-                    $(savedBtn).addClass("col-md-3");
+                    $(savedBtn).addClass("col-md-1");
                 }
             }
             $(planRow).append(divEl, textBox, savedBtn);
@@ -61,7 +67,8 @@ function saveEvents() {
 }
 
 function initialize() {
-   
+
+    $("#currentDay").text(now);
     retrieveEvents();
     displayPlanner();
 }
@@ -69,7 +76,6 @@ function initialize() {
 initialize();
 
 $(".planner").on("click", function (event) {
-
     event.preventDefault();
 
  /*   event.target.innerText.indexOf(questionSet.correctanswer[questionNum - 1]) != -1)*/
