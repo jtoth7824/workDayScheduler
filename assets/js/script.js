@@ -1,14 +1,7 @@
-
-var tryme; 
-    
-tryme = dayjs('2019-01-25').format('DD/MM/YYYY')
-
-    console.log(tryme);
-
-var events = {
+var events = [{
     hour: "",
     eventName: ""
-}
+}];
 
 var timeBlocks = ["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"];
 var timeBlock = $(".container");
@@ -22,9 +15,6 @@ function retrieveEvents() {
     }
 }
 
-/*var localizedFormat = require('dayjs/plugin/localizedFormat')
-dayjs.extend(localizedFormat)
-dayjs().format('L LT')*/
 var now = dayjs().format('dddd, MMM DD');
 now = now + "th";
 
@@ -39,7 +29,7 @@ function displayPlanner() {
                 if (i === 1) {
                     
                     var textBox = $("<textarea>");
-                    $(textBox).text("This is the text area");
+/*                    $(textBox).text("This is the text area");*/
                     $(textBox).addClass("present");
                     $(textBox).attr("name", j);
                     $(textBox).addClass("col-md-9 description");
@@ -75,28 +65,23 @@ function initialize() {
 
 initialize();
 
-$(".planner").on("click", function (event) {
+$(".saveBtn").on("click", function (event) {
     event.preventDefault();
 
- /*   event.target.innerText.indexOf(questionSet.correctanswer[questionNum - 1]) != -1)*/
+    var whichBtn = this.value;
 
-    console.log(event.target.innerText);
+    eventText = $(this).siblings().next().val();
+    whichHour = $(this).siblings().text();
 
-    var newEvent = this.value;
+    console.log("whichHour = " + whichHour);
 
-    var textarea = $(".textarea");
+    console.log("saved button = " + whichBtn);
+    console.log(eventText);
 
-    var textfield;
+   events[0].eventName = eventText;
+   events[0].hour = whichHour;
+    console.log(events.eventName);
+    console.log(events);
 
-    for(var i=0; i<timeBlocks.length; i++) {
-        if(textarea[i].name === i) {
-            textfield = textarea[i].value;
-        }
-    }
-
-/*    console.log(textarea[this.value].attr("name"));*/
-
-
- /*   events.eventName = */
-
+    localStorage.setItem("Events", JSON.stringify(events));
 });
