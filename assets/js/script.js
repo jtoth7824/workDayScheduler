@@ -1,9 +1,5 @@
+/* array containing each timeblock set of info */
 var timeBlocks = [{
-        hour: "8am",
-        eventName: "",
-        tftime: 8
-    },
-    {
         hour: "9am",
         eventName: "",
         tftime: 9
@@ -50,37 +46,59 @@ var timeBlocks = [{
     }
 ];
 
-console.log(timeBlocks[9].hour, timeBlocks[9].eventName, timeBlocks[9].tftime);
+var timeBlock = $(".container");
+/* grab current day using day js to display at top of planner */
+var now = dayjs().format('dddd, MMM DD');
 
 /*var timeBlocks = ["8am", "9am"[, "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"];*/
-var timeBlock = $(".container");
-var now = dayjs().format('dddd, MMM DD');
-now = now + "th";
 
+
+
+/* function that will display the colorized planner rows along with any stored events */
 function displayPlanner() {
 
+    /* loop through all timeblock array elements */
     for (j = 0; j < timeBlocks.length; j++) {
+        /* create form to store the remaining row element tags into */
         var planRow = $("<form>");
         $(planRow).attr("class", "row");
-        $(".container").append(planRow);
+        /* append form tag to html page */
+        $(timeBlock).append(planRow);
 
+        /* loop through once for each column to add to row */
+        /* this helps to create grid object */
         for (var i = 0; i < 3; i++) {
-            if (i === 1) {
+
+            /* create div to hold time information */
+            if (i === 0) {
+                var divEl = $("<div>");
+                divEl.text(timeBlocks[j].hour);
+                /* add bootstrap class to size column */
+                $(divEl).addClass("col-md-2 time-block hour");
+
+            /* create textarea that is for user input */
+            } else if (i === 1) {
 
                 var textBox = $("<textarea>");
                 $(textBox).text(timeBlocks[j].eventName);
-                var currentTime = dayjs().hour();
+                /* grab current time using day js for colorizing the timeblocks */
+/*                var currentTime = dayjs().hour();*/
+currentTime = 9;
 
+                /* decide whether current time is greater than the timeblock value based on index of array */
                 switch(parseInt(currentTime) > parseInt(timeBlocks[j].tftime)) {
+                    /* if greater than, then style textbox using "past" */
                     case true:
                         $(textBox).addClass("past");
                         break;
                     case false:
-                        console.log("equal to" + (parseInt(currentTime) === parseInt(timeBlocks[j].tftime)));
+                        /* decide if current equal to timeblock value based on index of array */
                         if(parseInt(currentTime) === parseInt(timeBlocks[j].tftime)) {
+                            /* if equal, then style textbox using "present" */
                             $(textBox).addClass("present");
                         }
                         else {
+                            /* if less than, then style textbox using "future" */
                             $(textBox).addClass("future");
                         }
                         break;
@@ -88,21 +106,22 @@ function displayPlanner() {
                         break;
                 }
 
-                $(textBox).attr("name", j);
-                $(textBox).addClass("col-md-9 description");
+/*                $(textBox).attr("name", j);*/
+                /* add bootstrap class to size column */
+                $(textBox).addClass("col-md-9 description");                
 
-            } else if (i === 0) {
-
-                var divEl = $("<div>");
-                divEl.text(timeBlocks[j].hour);
-                $(divEl).addClass("col-md-2 time-block hour");
+            /* Else create save button */
             } else {
-                var savedBtn = $("<button>" + "Save" + "</button>");
+                var savedBtn = $("<button>");
+                /* add class to style the Save button */
                 $(savedBtn).addClass("saveBtn");
                 $(savedBtn).val(j);
+                /* add bootstrap class to size column */
                 $(savedBtn).addClass("col-md-1");
+                $(savedBtn).append("<img src='assets/images/SaveButton.ico' style='height: 50px; width:50px;'/>");
             }
         }
+        /* add all 3 elements to the current form row */
         $(planRow).append(divEl, textBox, savedBtn);
     }
 }
@@ -118,29 +137,33 @@ function initialize() {
         localStorage.setItem("Events", JSON.stringify(timeBlocks));
     }
 
+    /* display current day on the planner page */
+    now = now + "th";
     $("#currentDay").text(now);
+
+    /* retrieve any existing event information from local storage */
     timeBlocks = JSON.parse(localStorage.getItem("Events"));
+
+    /* call to display the planner elements */
     displayPlanner();
 }
 
 initialize();
 
+/* event listener for save button */
 $(".saveBtn").on("click", function (event) {
     event.preventDefault();
 
+    /* store which Save button index was clicked */
     var whichBtn = this.value;
 
+    /* store the event text based upon the row the save button was in */
     eventText = $(this).siblings().next().val();
-    whichHour = $(this).siblings().text();
+/*    whichHour = $(this).siblings().text();*/
 
+    /* use saved button index to correctly save event text to array */
     timeBlocks[whichBtn].eventName = eventText;
 
+    /* store updated event information to local storage */
     localStorage.setItem("Events", JSON.stringify(timeBlocks));
 });
-
-function sortFunction() {
-    events.sort(function (a, b) {
-        console.log("in sort function");
-        return b.hour - a.hour;
-    });
-}
