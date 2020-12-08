@@ -82,8 +82,7 @@ function displayPlanner() {
                 var textBox = $("<textarea>");
                 $(textBox).text(timeBlocks[j].eventName);
                 /* grab current time using day js for colorizing the timeblocks */
-/*                var currentTime = dayjs().hour();*/
-currentTime = 9;
+                var currentTime = dayjs().hour();
 
                 /* decide whether current time is greater than the timeblock value based on index of array */
                 switch(parseInt(currentTime) > parseInt(timeBlocks[j].tftime)) {
@@ -105,8 +104,7 @@ currentTime = 9;
                     default:
                         break;
                 }
-
-/*                $(textBox).attr("name", j);*/
+                
                 /* add bootstrap class to size column */
                 $(textBox).addClass("col-md-9 description");                
 
