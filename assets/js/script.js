@@ -46,13 +46,15 @@ var timeBlocks = [{
     }
 ];
 
-var timeBlock = $(".container");
 /* grab current day using day js to display at top of planner */
 var now = dayjs().format('dddd, MMM DD');
 
-/*var timeBlocks = ["8am", "9am"[, "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"];*/
-
-
+/* clear out event names */
+function clearEvents() {
+    for(var m=0; m<timeBlocks.length; m++) {
+        timeBlocks[m].eventName = "";
+    }
+}
 
 /* function that will display the colorized planner rows along with any stored events */
 function displayPlanner() {
@@ -63,7 +65,7 @@ function displayPlanner() {
         var planRow = $("<form>");
         $(planRow).attr("class", "row");
         /* append form tag to html page */
-        $(timeBlock).append(planRow);
+        $(".container").append(planRow);
 
         /* loop through once for each column to add to row */
         /* this helps to create grid object */
@@ -129,18 +131,25 @@ function initialize() {
     // Get stored events from localStorage
     // Parsing the JSON string to an object
     var eventstry = JSON.parse(localStorage.getItem("Events"));
+    var retrievedDate = localStorage.getItem("Date");
 
     // If events were not retrieved from localStorage, update the events array to it
-    if (eventstry === null) {
+    if ((eventstry === null) || retrievedDate === null) {
         localStorage.setItem("Events", JSON.stringify(timeBlocks));
+        localStorage.setItem("Date", now);
+    }
+
+    /* clear events if retrieved date doesn't match current date */
+    if (!(retrievedDate === now)) {
+        clearEvents();
+    }
+    else {
+    /* retrieve any existing event information from local storage if retrieved date matches current date*/
+    timeBlocks = JSON.parse(localStorage.getItem("Events"));
     }
 
     /* display current day on the planner page */
-    now = now + "th";
-    $("#currentDay").text(now);
-
-    /* retrieve any existing event information from local storage */
-    timeBlocks = JSON.parse(localStorage.getItem("Events"));
+    $("#currentDay").text(now + "th");
 
     /* call to display the planner elements */
     displayPlanner();
@@ -162,6 +171,7 @@ $(".saveBtn").on("click", function (event) {
     /* use saved button index to correctly save event text to array */
     timeBlocks[whichBtn].eventName = eventText;
 
-    /* store updated event information to local storage */
+    /* store updated event and date information to local storage */
     localStorage.setItem("Events", JSON.stringify(timeBlocks));
+    localStorage.setItem("Date", now);
 });
