@@ -51,7 +51,7 @@ var now = dayjs().format('dddd, MMM DD');
 
 /* clear out event names */
 function clearEvents() {
-    for(var m=0; m<timeBlocks.length; m++) {
+    for (var m = 0; m < timeBlocks.length; m++) {
         timeBlocks[m].eventName = "";
     }
 }
@@ -78,27 +78,26 @@ function displayPlanner() {
                 /* add bootstrap class to size column */
                 $(divEl).addClass("col-md-2 time-block hour");
 
-            /* create textarea that is for user input */
+                /* create textarea that is for user input */
             } else if (i === 1) {
 
                 var textBox = $("<textarea>");
                 $(textBox).text(timeBlocks[j].eventName);
                 /* grab current time using day js for colorizing the timeblocks */
                 var currentTime = dayjs().hour();
-currentTime = 11;
+
                 /* decide whether current time is greater than the timeblock value based on index of array */
-                switch(parseInt(currentTime) > parseInt(timeBlocks[j].tftime)) {
+                switch (parseInt(currentTime) > parseInt(timeBlocks[j].tftime)) {
                     /* if greater than, then style textbox using "past" */
                     case true:
                         $(textBox).addClass("past textarea");
                         break;
                     case false:
                         /* decide if current equal to timeblock value based on index of array */
-                        if(parseInt(currentTime) === parseInt(timeBlocks[j].tftime)) {
+                        if (parseInt(currentTime) === parseInt(timeBlocks[j].tftime)) {
                             /* if equal, then style textbox using "present" */
                             $(textBox).addClass("present textarea");
-                        }
-                        else {
+                        } else {
                             /* if less than, then style textbox using "future" */
                             $(textBox).addClass("future textarea");
                         }
@@ -106,11 +105,11 @@ currentTime = 11;
                     default:
                         break;
                 }
-                
-                /* add bootstrap class to size column */
-                $(textBox).addClass("col-md-9 description");                
 
-            /* Else create save button */
+                /* add bootstrap class to size column */
+                $(textBox).addClass("col-md-9 description");
+
+                /* Else create save button */
             } else {
                 var savedBtn = $("<button>");
                 /* add class to style the Save button */
@@ -130,11 +129,11 @@ function initialize() {
 
     // Get stored events from localStorage
     // Parsing the JSON string to an object
-    var eventstry = JSON.parse(localStorage.getItem("Events"));
+    var eventStored = JSON.parse(localStorage.getItem("Events"));
     var retrievedDate = localStorage.getItem("Date");
 
     // If events were not retrieved from localStorage, update the events array to it
-    if ((eventstry === null) || retrievedDate === null) {
+    if ((eventStored === null) || retrievedDate === null) {
         localStorage.setItem("Events", JSON.stringify(timeBlocks));
         localStorage.setItem("Date", now);
     }
@@ -142,10 +141,9 @@ function initialize() {
     /* clear events if retrieved date doesn't match current date */
     if (!(retrievedDate === now)) {
         clearEvents();
-    }
-    else {
-    /* retrieve any existing event information from local storage if retrieved date matches current date*/
-    timeBlocks = JSON.parse(localStorage.getItem("Events"));
+    } else {
+        /* retrieve any existing event information from local storage if retrieved date matches current date*/
+        timeBlocks = JSON.parse(localStorage.getItem("Events"));
     }
 
     /* display current day on the planner page */
@@ -166,7 +164,6 @@ $(".saveBtn").on("click", function (event) {
 
     /* store the event text based upon the row the save button was in */
     eventText = $(this).siblings().next().val();
-/*    whichHour = $(this).siblings().text();*/
 
     /* use saved button index to correctly save event text to array */
     timeBlocks[whichBtn].eventName = eventText;
