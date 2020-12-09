@@ -18,7 +18,7 @@ All the events saved are held in local storage of the web browser such that they
 The following is a screenshot of the daily planner.
 
 <p align="center">
-  <img src="./assets/images/StartScreenJavascriptQuiz.png" alt="Javascript Quiz Start screenshot">
+  <img src="./assets/images/DailyPlanner.png" alt="Daily Planner screenshot">
 </p>
 
 ## Setup/Installation Requirements

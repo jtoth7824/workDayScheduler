@@ -85,22 +85,22 @@ function displayPlanner() {
                 $(textBox).text(timeBlocks[j].eventName);
                 /* grab current time using day js for colorizing the timeblocks */
                 var currentTime = dayjs().hour();
-
+currentTime = 11;
                 /* decide whether current time is greater than the timeblock value based on index of array */
                 switch(parseInt(currentTime) > parseInt(timeBlocks[j].tftime)) {
                     /* if greater than, then style textbox using "past" */
                     case true:
-                        $(textBox).addClass("past");
+                        $(textBox).addClass("past textarea");
                         break;
                     case false:
                         /* decide if current equal to timeblock value based on index of array */
                         if(parseInt(currentTime) === parseInt(timeBlocks[j].tftime)) {
                             /* if equal, then style textbox using "present" */
-                            $(textBox).addClass("present");
+                            $(textBox).addClass("present textarea");
                         }
                         else {
                             /* if less than, then style textbox using "future" */
-                            $(textBox).addClass("future");
+                            $(textBox).addClass("future textarea");
                         }
                         break;
                     default:
