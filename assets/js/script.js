@@ -76,7 +76,7 @@ function displayPlanner() {
                 var divEl = $("<div>");
                 divEl.text(timeBlocks[j].hour);
                 /* add bootstrap class to size column */
-                $(divEl).addClass("col-md-2 time-block hour");
+                $(divEl).addClass("col-sm-2 time-block hour");
 
                 /* create textarea that is for user input */
             } else if (i === 1) {
@@ -107,7 +107,7 @@ function displayPlanner() {
                 }
 
                 /* add bootstrap class to size column */
-                $(textBox).addClass("col-md-9 description");
+                $(textBox).addClass("col-sm-9 description");
 
                 /* Else create save button */
             } else {
@@ -116,8 +116,8 @@ function displayPlanner() {
                 $(savedBtn).addClass("saveBtn");
                 $(savedBtn).val(j);
                 /* add bootstrap class to size column */
-                $(savedBtn).addClass("col-md-1");
-                $(savedBtn).append("<img src='assets/images/SaveButton.ico' style='height: 50px; width:50px;'/>");
+                $(savedBtn).addClass("col-sm-1");
+                $(savedBtn).append("<img class='responsive' src='assets/images/SaveButton.ico' '/>");
             }
         }
         /* add all 3 elements to the current form row */
