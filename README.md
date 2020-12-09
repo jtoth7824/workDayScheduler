@@ -34,7 +34,7 @@ Please email me for further questions at jtoth7824@gmail.com
 ## Technologies Used
 
 <div>jQuery</div>
-<div>day js library</div>
+<div>Day.js library</div>
 <div>Javascript</div>
 <div>Local Storage</div>
 <div>HTML</div>
