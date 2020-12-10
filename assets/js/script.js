@@ -117,7 +117,7 @@ function displayPlanner() {
                 $(savedBtn).val(j);
                 /* add bootstrap class to size column */
                 $(savedBtn).addClass("col-1");
-                $(savedBtn).append("<img class='img-fluid' src='assets/images/SaveButton.ico'/>");
+                $(savedBtn).append("<img class='img-fluid imageCenter' src='assets/images/SaveButton.ico'/>");
             }
         }
         /* add all 3 elements to the current form row */
